@@ -1,0 +1,190 @@
+/*
+ * Created by SharpDevelop.
+ * User: sergey.lezhenko
+ * Date: 25.07.2017
+ * Time: 9:07
+ * 
+ * To change this template use Tools | Options | Coding | Edit Standard Headers.
+ */
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Drawing;
+using System.Windows.Forms;
+using System.Data.OleDb;
+
+namespace DZ_1
+{
+	/// <summary>
+	/// Description of MainForm.
+	/// </summary>
+	public partial class MainForm : Form
+	{
+		private DataGrid dgField;
+		private DataSet dataSet;
+		private ComboBox cbTable;
+		private OleDbConnection Connect;
+		private OleDbCommand ComBuyers, ComSellers, ComSales;
+		public MainForm()
+		{
+			InitializeComponent();
+			
+			//Создаём выпадающий список
+			cbTable = new ComboBox();
+			cbTable.Size = new Size(100, 50);
+			cbTable.Location = new Point(20, 30);
+			this.Controls.Add(cbTable);
+			
+			//Добавляем в него элементы
+			cbTable.BeginUpdate();
+			cbTable.Items.Add("Покупатели");
+			cbTable.Items.Add("Продавцы");
+			cbTable.Items.Add("Продажи");
+			cbTable.EndUpdate();
+			
+			//Подписываемся на событие изменения поля
+			cbTable.SelectedIndexChanged += tableChanged;
+			
+			//Создаём поле для показа таблицы результатов
+			dgField = new DataGrid();
+			dgField.Size = new Size(700, 400);
+			dgField.Location = new Point(200, 30);
+			this.Controls.Add(dgField);
+			
+			//Задаём параметры подключения
+			Connect = new OleDbConnection("Provider = Microsoft.ACE.OLEDB.12.0;" +
+			                              "Data Source = .\\example.accdb;" +
+			                              "Persist Security Info = false");
+			
+			//Задаём запросы на выборку данных
+			ComBuyers = new OleDbCommand("SELECT * FROM Buyers", Connect);
+			ComSellers = new OleDbCommand("SELECT * FROM Sellers", Connect);
+			ComSales = new OleDbCommand("SELECT Sales.id, "+
+			                            "Sellers.firstname + ' ' + Sellers.lastname, "+
+			                            "Buyers.firstname + ' ' + Buyers.lastname, "+
+			                            "amount, dateTransaction "+
+			                            "FROM Sales, Buyers, Sellers "+
+			                            "WHERE idSeller=Sellers.id "+
+			                            "AND idBuyer=Buyers.id;",
+			                            Connect);
+		}
+		
+		/// <summary>
+		/// Функция по событию передаёт в RefreshGrid нужную команду
+		/// </summary>
+		private void tableChanged(object sender, System.EventArgs e)
+		{
+			switch((string)cbTable.SelectedItem)
+			{
+				case "Покупатели":
+					{
+						RefreshGrid(ComBuyers);
+						break;}
+				case "Продавцы":
+					{
+						RefreshGrid(ComSellers);
+						break;}
+				case "Продажи":
+					{
+						RefreshGrid(ComSales);
+						break;}
+			}
+		}
+		
+		/// <summary>
+		/// Обновляет поле с таблицей результатов
+		/// </summary>
+		/// <param name="command">Команда с запросом в базу</param>
+		private void RefreshGrid(OleDbCommand command)
+		{
+			try{
+				//Создаём таблицу для результатов
+				DataTable Table = new DataTable("MainTable");
+				DataColumn Col;
+				DataRow Row;
+				if(command.Equals(ComSellers) || command.Equals(ComBuyers))
+				{
+					Col = new DataColumn();
+					Col.DataType = Type.GetType("System.Int32");
+					Col.ColumnName = "id";
+					Col.ReadOnly = true;
+					Table.Columns.Add(Col);
+					Col = new DataColumn();
+					Col.DataType = Type.GetType("System.String");
+					Col.ColumnName = "FirstName";
+					Col.ReadOnly = true;
+					Table.Columns.Add(Col);
+					Col = new DataColumn();
+					Col.DataType = Type.GetType("System.String");
+					Col.ColumnName = "LastName";
+					Col.ReadOnly = true;
+					Table.Columns.Add(Col);
+				}else{
+					Col = new DataColumn();
+					Col.DataType = Type.GetType("System.Int32");
+					Col.ColumnName = "id";
+					Col.ReadOnly = true;
+					Table.Columns.Add(Col);
+					Col = new DataColumn();
+					Col.DataType = Type.GetType("System.String");
+					Col.ColumnName = "Seller";
+					Col.ReadOnly = true;
+					Table.Columns.Add(Col);
+					Col = new DataColumn();
+					Col.DataType = Type.GetType("System.String");
+					Col.ColumnName = "Buyer";
+					Col.ReadOnly = true;
+					Table.Columns.Add(Col);
+    				Col = new DataColumn();
+					Col.DataType = Type.GetType("System.Double");
+					Col.ColumnName = "Amount";
+					Col.ReadOnly = true;
+					Table.Columns.Add(Col);
+					Col = new DataColumn();
+					Col.DataType = Type.GetType("System.DateTime");
+					Col.ColumnName = "Date";
+					Col.ReadOnly = true;
+					Table.Columns.Add(Col);
+				}
+				
+				//Создаём DataSet для хранения таблицы
+				dataSet = new DataSet();
+				
+				//Добавляем в него таблицу
+    			dataSet.Tables.Add(Table);
+    			
+    			//Подключаемся к базе и выполняем запрос
+				Connect.Open();
+				OleDbDataReader reader = command.ExecuteReader();
+				
+    			//Наполняем таблицу данными из базы
+				while(reader.Read())
+				{
+					if (reader.FieldCount == 3) {
+						Row = Table.NewRow();
+						Row["id"] = Convert.ToInt32(reader["id"]);
+						Row["FirstName"] = reader["firstname"];
+						Row["LastName"] = reader["lastname"];
+						Table.Rows.Add(Row);
+					}else if(reader.FieldCount == 5)
+					{
+						Row = Table.NewRow();
+						Row["id"] = Convert.ToInt32(reader[0]);
+						Row["Seller"] = reader[1];
+						Row["Buyer"] = reader[2];
+						Row["Amount"] = Convert.ToDouble(reader[3]);
+						Row["Date"] = Convert.ToDateTime(reader[4]);
+						Table.Rows.Add(Row);
+					}
+				}
+				
+				//Привязываем данные к полю вывода
+				dgField.SetDataBinding(dataSet, "MainTable");
+			}catch(Exception e){
+				MessageBox.Show(e.Message, "Error", MessageBoxButtons.OK);
+			}finally{
+				if(Connect.State == ConnectionState.Open) Connect.Close();
+			}
+		}
+	}
+}
