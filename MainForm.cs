@@ -28,12 +28,15 @@ namespace DZ_2
 */		
 		private OleDbConnection Connect;
 		private OleDbCommand comGetData, comInsert, comEdit, comDelete;		
+		
+		/*
 		private Label lHeader = new Label();
 		private Panel buttonPanel = new Panel();
 		private DataGridView dgvEmployees = new DataGridView();
 		private Button btnAddEmployee = new Button();
 		private Button btnEditEmployee = new Button();
 		private Button btnDeleteEmployee = new Button();
+		*/
 		
 		public MainForm()
 		{
@@ -72,11 +75,17 @@ namespace DZ_2
 			SetupLayout();
 			SetupDbConnect();
 			SetupDataGridView();
+			Form fmLogin = new formLogin();
+			if(fmLogin.ShowDialog() == DialogResult.OK)
+			{
+				
+			}
 			
 		}
 
 		private void SetupLayout()
 		{
+			/*
 			lHeader.Location = new Point(400, 20);
 			lHeader.Size = new Size(150, 20);
 			lHeader.Font = new Font(lHeader.Font, FontStyle.Bold);
@@ -101,7 +110,7 @@ namespace DZ_2
 			buttonPanel.Height = 50;
 			buttonPanel.Dock = DockStyle.Bottom;
 			
-			this.Controls.Add(buttonPanel);
+			this.Controls.Add(buttonPanel);*/
 		}
 
 		private void SetupDbConnect()
@@ -120,6 +129,7 @@ namespace DZ_2
 		
 		private void SetupDataGridView()
 		{
+			/*
 			this.Controls.Add(dgvEmployees);
 			
 			dgvEmployees.ColumnCount = 7;
@@ -161,6 +171,7 @@ namespace DZ_2
 			dgvEmployees.Dock = DockStyle.None;
 			
 			dgvEmployees.DataSource = GetDataFormDB();
+			*/
 		}
 
 		private DataTable GetDataFormDB()
@@ -182,6 +193,7 @@ namespace DZ_2
 			return table;
 		}
 		
+		/*
 		private void btnAddEmployee_Click(object sender, EventArgs e)
 		{
 			throw new NotImplementedException();
@@ -196,6 +208,7 @@ namespace DZ_2
 		{
 			throw new NotImplementedException();
 		}
+		*/
 /*
 		/// <summary>
 		/// Функция по событию передаёт в RefreshGrid нужную команду
