@@ -1,5 +1,5 @@
 --Создаём базу
-CREATE DATABASE Employees;
+--CREATE DATABASE Employees;
 
 GO
 
@@ -203,7 +203,7 @@ BEGIN
   EXECUTE getIdPosition @position,
                         @idPosition OUTPUT;
   INSERT INTO Employees
-    VALUES (@idSurname, @idName, @idPatronymic, @isPosition, @admission, @dismissal, @photo);
+    VALUES (@idSurname, @idName, @idPatronymic, @idPosition, @admission, @dismissal, @photo);
 END
 
 GO
@@ -262,11 +262,11 @@ CREATE PROCEDURE getEmployees
 AS
 BEGIN
   SELECT
-    id,
+    Employees.id,
     Surnames.name AS 'Surname',
     Names.name AS 'Name',
     Patronymics.name AS 'Patronymic',
-    Position.name AS 'Position',
+    Positions.name AS 'Position',
     admission AS 'Admission',
     dismissal AS 'Dismissal',
     photo AS 'Photo'
@@ -338,11 +338,9 @@ USE Employees;
 EXECUTE sp_grantdbaccess @loginame = 'director';
 EXECUTE sp_grantdbaccess @loginame = 'buhgalter';
 EXECUTE sp_grantdbaccess @loginame = 'allusers';
---Добавляем директору роль db_datawriter 
-EXECUTE sp_addrolemember @rolename = 'db_datawriter',
-                         @membername = 'director';
---Выдаём права для бухгалтера и пользователя
-GRANT EXECUTE ON getEmployees TO buhgalter;
-GRANT EXECUTE ON getEmployees TO allusers;
-GRANT EXECUTE ON updateEmployeeById TO buhgalter;
-GRANT EXECUTE ON addEmployee TO buhgalter;
+
+--Выдаём права на выполнение процедур
+GRANT EXECUTE ON getEmployees TO director, buhgalter, allusers;
+GRANT EXECUTE ON updateEmployeeById TO director, buhgalter;
+GRANT EXECUTE ON addEmployee TO director, buhgalter;
+GRANT EXECUTE ON deleteEmployeeById TO director;
