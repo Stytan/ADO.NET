@@ -42,85 +42,85 @@ namespace EmployeeCatalog
         /// </summary>
         private void InitializeComponent()
         {
-            this.labelLogin = new System.Windows.Forms.Label();
-            this.labelPassword = new System.Windows.Forms.Label();
-            this.maskedTextBox1 = new System.Windows.Forms.MaskedTextBox();
-            this.btnLogin = new System.Windows.Forms.Button();
-            this.btnExit = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.SuspendLayout();
-            // 
-            // labelLogin
-            // 
-            this.labelLogin.Location = new System.Drawing.Point(24, 40);
-            this.labelLogin.Name = "labelLogin";
-            this.labelLogin.Size = new System.Drawing.Size(68, 23);
-            this.labelLogin.TabIndex = 1;
-            this.labelLogin.Text = "Login:";
-            this.labelLogin.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // labelPassword
-            // 
-            this.labelPassword.Location = new System.Drawing.Point(24, 88);
-            this.labelPassword.Name = "labelPassword";
-            this.labelPassword.Size = new System.Drawing.Size(68, 23);
-            this.labelPassword.TabIndex = 1;
-            this.labelPassword.Text = "Password:";
-            this.labelPassword.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // maskedTextBox1
-            // 
-            this.maskedTextBox1.Location = new System.Drawing.Point(96, 88);
-            this.maskedTextBox1.Name = "maskedTextBox1";
-            this.maskedTextBox1.PasswordChar = '*';
-            this.maskedTextBox1.Size = new System.Drawing.Size(120, 20);
-            this.maskedTextBox1.TabIndex = 2;
-            // 
-            // btnLogin
-            // 
-            this.btnLogin.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnLogin.Location = new System.Drawing.Point(64, 128);
-            this.btnLogin.Name = "btnLogin";
-            this.btnLogin.Size = new System.Drawing.Size(75, 23);
-            this.btnLogin.TabIndex = 3;
-            this.btnLogin.Text = "Login";
-            this.btnLogin.UseVisualStyleBackColor = true;
-            // 
-            // btnExit
-            // 
-            this.btnExit.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnExit.Location = new System.Drawing.Point(168, 128);
-            this.btnExit.Name = "btnExit";
-            this.btnExit.Size = new System.Drawing.Size(75, 23);
-            this.btnExit.TabIndex = 4;
-            this.btnExit.Text = "Exit";
-            this.btnExit.UseVisualStyleBackColor = true;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(96, 42);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(120, 20);
-            this.textBox1.TabIndex = 5;
-            // 
-            // formLogin
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(283, 160);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.btnExit);
-            this.Controls.Add(this.btnLogin);
-            this.Controls.Add(this.maskedTextBox1);
-            this.Controls.Add(this.labelPassword);
-            this.Controls.Add(this.labelLogin);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.MaximizeBox = false;
-            this.Name = "formLogin";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Login";
-            this.ResumeLayout(false);
-            this.PerformLayout();
+        	this.labelLogin = new System.Windows.Forms.Label();
+        	this.labelPassword = new System.Windows.Forms.Label();
+        	this.maskedTextBox1 = new System.Windows.Forms.MaskedTextBox();
+        	this.btnLogin = new System.Windows.Forms.Button();
+        	this.btnExit = new System.Windows.Forms.Button();
+        	this.textBox1 = new System.Windows.Forms.TextBox();
+        	this.SuspendLayout();
+        	// 
+        	// labelLogin
+        	// 
+        	this.labelLogin.Location = new System.Drawing.Point(24, 40);
+        	this.labelLogin.Name = "labelLogin";
+        	this.labelLogin.Size = new System.Drawing.Size(68, 23);
+        	this.labelLogin.TabIndex = 1;
+        	this.labelLogin.Text = "Login:";
+        	this.labelLogin.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+        	// 
+        	// labelPassword
+        	// 
+        	this.labelPassword.Location = new System.Drawing.Point(24, 88);
+        	this.labelPassword.Name = "labelPassword";
+        	this.labelPassword.Size = new System.Drawing.Size(68, 23);
+        	this.labelPassword.TabIndex = 1;
+        	this.labelPassword.Text = "Password:";
+        	this.labelPassword.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+        	// 
+        	// maskedTextBox1
+        	// 
+        	this.maskedTextBox1.Location = new System.Drawing.Point(96, 88);
+        	this.maskedTextBox1.Name = "maskedTextBox1";
+        	this.maskedTextBox1.PasswordChar = '*';
+        	this.maskedTextBox1.Size = new System.Drawing.Size(120, 20);
+        	this.maskedTextBox1.TabIndex = 3;
+        	// 
+        	// btnLogin
+        	// 
+        	this.btnLogin.DialogResult = System.Windows.Forms.DialogResult.OK;
+        	this.btnLogin.Location = new System.Drawing.Point(64, 128);
+        	this.btnLogin.Name = "btnLogin";
+        	this.btnLogin.Size = new System.Drawing.Size(75, 23);
+        	this.btnLogin.TabIndex = 4;
+        	this.btnLogin.Text = "Login";
+        	this.btnLogin.UseVisualStyleBackColor = true;
+        	// 
+        	// btnExit
+        	// 
+        	this.btnExit.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+        	this.btnExit.Location = new System.Drawing.Point(168, 128);
+        	this.btnExit.Name = "btnExit";
+        	this.btnExit.Size = new System.Drawing.Size(75, 23);
+        	this.btnExit.TabIndex = 5;
+        	this.btnExit.Text = "Exit";
+        	this.btnExit.UseVisualStyleBackColor = true;
+        	// 
+        	// textBox1
+        	// 
+        	this.textBox1.Location = new System.Drawing.Point(96, 42);
+        	this.textBox1.Name = "textBox1";
+        	this.textBox1.Size = new System.Drawing.Size(120, 20);
+        	this.textBox1.TabIndex = 2;
+        	// 
+        	// formLogin
+        	// 
+        	this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+        	this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+        	this.ClientSize = new System.Drawing.Size(283, 160);
+        	this.Controls.Add(this.textBox1);
+        	this.Controls.Add(this.btnExit);
+        	this.Controls.Add(this.btnLogin);
+        	this.Controls.Add(this.maskedTextBox1);
+        	this.Controls.Add(this.labelPassword);
+        	this.Controls.Add(this.labelLogin);
+        	this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+        	this.MaximizeBox = false;
+        	this.Name = "formLogin";
+        	this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+        	this.Text = "Login";
+        	this.ResumeLayout(false);
+        	this.PerformLayout();
 
         }
 
