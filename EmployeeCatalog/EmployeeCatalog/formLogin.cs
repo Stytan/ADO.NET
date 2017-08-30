@@ -7,26 +7,18 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
-using System.Drawing;
 using System.Windows.Forms;
-using System.Windows.Controls;
 
 namespace EmployeeCatalog
 {
 	/// <summary>
-	/// Description of formLogin.
+	/// Запрос логина и пароля для входа в БД
 	/// </summary>
 	public partial class formLogin : Form
 	{
 		public formLogin()
 		{
-			//
-			// The InitializeComponent() call is required for Windows Forms designer support.
-			//
 			InitializeComponent();
-			//
-			// TODO: Add constructor code after the InitializeComponent() call.
-			//
 		}
 	}
 }
