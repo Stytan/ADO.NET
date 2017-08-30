@@ -9,9 +9,9 @@ namespace EmployeeCatalog
 {
     public partial class MainForm : Form
     {
-    	/// <summary>
-    	/// Форма входа
-    	/// </summary>
+        /// <summary>
+        /// Форма входа
+        /// </summary>
         formLogin fmLogin;
         /// <summary>
         /// Соединение с базой
@@ -28,18 +28,18 @@ namespace EmployeeCatalog
         {
             do
             {
-            	//Запрашиваем логин и пароль
+                //Запрашиваем логин и пароль
                 fmLogin = new formLogin();
                 if (fmLogin.ShowDialog() != DialogResult.OK)
                 {
-                	//Если не ОК - завершаемся
+                    //Если не ОК - завершаемся
                     Environment.Exit(0);
                 }
                 //пока не подключимся к базе
             } while (!SetupDbConnect());
             //Обновляем таблицу
             GetDataFormDB();
-			labelUser.Text += fmLogin.textBox1.Text;
+            labelUser.Text += fmLogin.textBox1.Text;
         }
 
         /// <summary>
@@ -59,7 +59,8 @@ namespace EmployeeCatalog
             try
             {
                 connect.Open();
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
                 return false;
@@ -79,7 +80,7 @@ namespace EmployeeCatalog
                 connect.Open();
                 SqlCommand com = new SqlCommand
                 {
-                	//Процедура возвращает таблицу сотрудников
+                    //Процедура возвращает таблицу сотрудников
                     CommandText = "EXECUTE getEmployees",
                     Connection = connect
                 };
@@ -112,126 +113,142 @@ namespace EmployeeCatalog
             }
             finally
             {
-				reader.Close();
+                reader.Close();
                 connect.Close();
             }
         }
-        
+
         /// <summary>
         /// Обновляет фото при выборе сотрудника
         /// </summary>
-		void dataGridView1_SelectionChanged(object sender, EventArgs e)
-		{
-			picBoxPhoto.ImageLocation = (string)(dataGridView1.CurrentRow.Cells["photo"].Value ?? "");
-			picBoxPhoto.Load();
-		}
-		
-		/// <summary>
-		/// Удаляет сотрудника из базы
-		/// </summary>
-		void btnDelete_Click(object sender, EventArgs e)
-		{
-			//Если выбрана строка
-			if(dataGridView1.SelectedRows.Count>0){
-				try{
-					connect.Open();
-					SqlCommand com = new SqlCommand
-                	{
-						//Процедура удаляет строку из базы по её id
-						CommandText = "EXECUTE deleteEmployeeById " + (int)dataGridView1.CurrentRow.Cells["id"].Value,
-                    	Connection = connect
-                	};
-					MessageBox.Show(com.ExecuteNonQuery()+" record deleted");
-					//Обновляем таблицу
-				}catch(Exception ex){
-					MessageBox.Show(ex.Message);
-				}finally{
-					connect.Close();
+        void dataGridView1_SelectionChanged(object sender, EventArgs e)
+        {
+            picBoxPhoto.ImageLocation = (string)(dataGridView1.CurrentRow.Cells["photo"].Value ?? "");
+            picBoxPhoto.Load();
+        }
+
+        /// <summary>
+        /// Удаляет сотрудника из базы
+        /// </summary>
+        void btnDelete_Click(object sender, EventArgs e)
+        {
+            //Если выбрана строка
+            if (dataGridView1.SelectedRows.Count > 0)
+            {
+                try
+                {
+                    connect.Open();
+                    SqlCommand com = new SqlCommand
+                    {
+                        //Процедура удаляет строку из базы по её id
+                        CommandText = "EXECUTE deleteEmployeeById " + (int)dataGridView1.CurrentRow.Cells["id"].Value,
+                        Connection = connect
+                    };
+                    MessageBox.Show(com.ExecuteNonQuery() + " record deleted");
+                    //Обновляем таблицу
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                finally
+                {
+                    connect.Close();
                 }
                 GetDataFormDB();
             }
         }
-		
-		/// <summary>
-		/// Добавляет сотрудника в базу
-		/// </summary>
-		void btnAdd_Click(object sender, EventArgs e)
-		{
-			//Форма добавления/редактирования сотрудника
-			editForm fmEdit = new editForm();
-			if(fmEdit.ShowDialog() == DialogResult.OK)
-			{
-				try{
-					connect.Open();
-					//Процедура добавляет данные сотрудника по все таблицы БД
-					string comText = "EXECUTE addEmployee '"
-					                 + fmEdit.textBoxSurname.Text + "', '"
-					                 + fmEdit.textBoxName.Text + "', '"
-					                 + fmEdit.textBoxPatronymic.Text + "', '"
-					                 + fmEdit.textBoxPosition.Text + "', '"
-					                 + fmEdit.textBoxAdmission.Text + "', '"
-					                 + fmEdit.textBoxDismissal.Text + "', '"
-					                 + fmEdit.pictureBox1.ImageLocation + "'";
-					SqlCommand com = new SqlCommand
-					{
-						CommandText = comText,
-						Connection = connect
-					};
-					MessageBox.Show(com.ExecuteNonQuery() + " record added");
-				}catch(Exception ex){
-					MessageBox.Show(ex.Message);
-				}finally{
-					connect.Close();
-				}
+
+        /// <summary>
+        /// Добавляет сотрудника в базу
+        /// </summary>
+        void btnAdd_Click(object sender, EventArgs e)
+        {
+            //Форма добавления/редактирования сотрудника
+            editForm fmEdit = new editForm();
+            if (fmEdit.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    connect.Open();
+                    //Процедура добавляет данные сотрудника по все таблицы БД
+                    string comText = "EXECUTE addEmployee '"
+                                     + fmEdit.textBoxSurname.Text + "', '"
+                                     + fmEdit.textBoxName.Text + "', '"
+                                     + fmEdit.textBoxPatronymic.Text + "', '"
+                                     + fmEdit.textBoxPosition.Text + "', '"
+                                     + fmEdit.textBoxAdmission.Text + "', '"
+                                     + fmEdit.textBoxDismissal.Text + "', '"
+                                     + fmEdit.pictureBox1.ImageLocation + "'";
+                    SqlCommand com = new SqlCommand
+                    {
+                        CommandText = comText,
+                        Connection = connect
+                    };
+                    MessageBox.Show(com.ExecuteNonQuery() + " record added");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                finally
+                {
+                    connect.Close();
+                }
                 GetDataFormDB();
             }
-		}
-		
-		/// <summary>
-		/// Редактирует данные выбранного сотрудника в БД
-		/// </summary>
-		void btnEdit_Click(object sender, EventArgs e)
-		{
-			editForm fmEdit = new editForm();
-			DataGridViewCellCollection dc = dataGridView1.CurrentRow.Cells;
-			//Заполняем форму данными редактируемого сотрудника
-			fmEdit.textBoxSurname.Text = (string)(dc["surname"].Value ?? "");
-			fmEdit.textBoxName.Text = (string)(dc["name"].Value ?? "");
-			fmEdit.textBoxPatronymic.Text = (string)(dc["patronymic"].Value ?? "");
-			fmEdit.textBoxPosition.Text = (string)(dc["position"].Value ?? "");
-			fmEdit.textBoxAdmission.Text = (string)(dc["admission"].Value ?? "");
-			fmEdit.textBoxDismissal.Text = (string)(dc["dismissal"].Value ?? "");
-			fmEdit.pictureBox1.ImageLocation = (string)(dc["photo"].Value ?? "");
-			fmEdit.pictureBox1.Load();
-			fmEdit.Text = "Edit employee";
-			fmEdit.buttonAdd.Text = "Save";
-			if(fmEdit.ShowDialog() == DialogResult.OK)
-			{
-				try{
-					connect.Open();
-					//Процедура обновляет данные сотрудника во всех таблицах БД по его id
-					string comText = "EXECUTE updateEmployeeById "
-					                 + (int)dc["id"].Value + ", '"
-					                 + fmEdit.textBoxSurname.Text + "', '"
-					                 + fmEdit.textBoxName.Text + "', '"
-					                 + fmEdit.textBoxPatronymic.Text + "', '"
-					                 + fmEdit.textBoxPosition.Text + "', '"
-					                 + fmEdit.textBoxAdmission.Text + "', '"
-					                 + fmEdit.textBoxDismissal.Text + "', '"
-					                 + fmEdit.pictureBox1.ImageLocation + "'";
-					SqlCommand com = new SqlCommand
-					{
-						CommandText = comText,
-						Connection = connect
-					};
-					MessageBox.Show(com.ExecuteNonQuery() + " record updated");
-				}catch(Exception ex){
-					MessageBox.Show(ex.Message);
-				}finally{
-					connect.Close();
-				}
+        }
+
+        /// <summary>
+        /// Редактирует данные выбранного сотрудника в БД
+        /// </summary>
+        void btnEdit_Click(object sender, EventArgs e)
+        {
+            editForm fmEdit = new editForm();
+            DataGridViewCellCollection dc = dataGridView1.CurrentRow.Cells;
+            //Заполняем форму данными редактируемого сотрудника
+            fmEdit.textBoxSurname.Text = (string)(dc["surname"].Value ?? "");
+            fmEdit.textBoxName.Text = (string)(dc["name"].Value ?? "");
+            fmEdit.textBoxPatronymic.Text = (string)(dc["patronymic"].Value ?? "");
+            fmEdit.textBoxPosition.Text = (string)(dc["position"].Value ?? "");
+            fmEdit.textBoxAdmission.Text = (string)(dc["admission"].Value ?? "");
+            fmEdit.textBoxDismissal.Text = (string)(dc["dismissal"].Value ?? "");
+            fmEdit.pictureBox1.ImageLocation = (string)(dc["photo"].Value ?? "");
+            fmEdit.pictureBox1.Load();
+            fmEdit.Text = "Edit employee";
+            fmEdit.buttonAdd.Text = "Save";
+            if (fmEdit.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    connect.Open();
+                    //Процедура обновляет данные сотрудника во всех таблицах БД по его id
+                    string comText = "EXECUTE updateEmployeeById "
+                                     + (int)dc["id"].Value + ", '"
+                                     + fmEdit.textBoxSurname.Text + "', '"
+                                     + fmEdit.textBoxName.Text + "', '"
+                                     + fmEdit.textBoxPatronymic.Text + "', '"
+                                     + fmEdit.textBoxPosition.Text + "', '"
+                                     + fmEdit.textBoxAdmission.Text + "', '"
+                                     + fmEdit.textBoxDismissal.Text + "', '"
+                                     + fmEdit.pictureBox1.ImageLocation + "'";
+                    SqlCommand com = new SqlCommand
+                    {
+                        CommandText = comText,
+                        Connection = connect
+                    };
+                    MessageBox.Show(com.ExecuteNonQuery() + " record updated");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                finally
+                {
+                    connect.Close();
+                }
                 GetDataFormDB();
             }
-		}
+        }
     }
 }
