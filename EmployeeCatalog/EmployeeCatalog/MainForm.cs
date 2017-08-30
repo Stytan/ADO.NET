@@ -138,19 +138,19 @@ namespace EmployeeCatalog
 					SqlCommand com = new SqlCommand
                 	{
 						//Процедура удаляет строку из базы по её id
-						CommandText = "EXECUTE deleteEmployeeById " + (string)dataGridView1.CurrentRow.Cells["id"].Value,
+						CommandText = "EXECUTE deleteEmployeeById " + (int)dataGridView1.CurrentRow.Cells["id"].Value,
                     	Connection = connect
                 	};
 					MessageBox.Show(com.ExecuteNonQuery()+" record deleted");
 					//Обновляем таблицу
-					GetDataFormDB();
 				}catch(Exception ex){
 					MessageBox.Show(ex.Message);
 				}finally{
 					connect.Close();
-				}
-			}
-		}
+                }
+                GetDataFormDB();
+            }
+        }
 		
 		/// <summary>
 		/// Добавляет сотрудника в базу
@@ -165,12 +165,12 @@ namespace EmployeeCatalog
 					connect.Open();
 					//Процедура добавляет данные сотрудника по все таблицы БД
 					string comText = "EXECUTE addEmployee '"
-					                 + fmEdit.textBoxSurname.Text + "' '"
-					                 + fmEdit.textBoxName.Text + "' '"
-					                 + fmEdit.textBoxPatronymic.Text + "' '"
-					                 + fmEdit.textBoxPosition.Text + "' '"
-					                 + fmEdit.textBoxAdmission.Text + "' '"
-					                 + fmEdit.textBoxDismissal.Text + "' '"
+					                 + fmEdit.textBoxSurname.Text + "', '"
+					                 + fmEdit.textBoxName.Text + "', '"
+					                 + fmEdit.textBoxPatronymic.Text + "', '"
+					                 + fmEdit.textBoxPosition.Text + "', '"
+					                 + fmEdit.textBoxAdmission.Text + "', '"
+					                 + fmEdit.textBoxDismissal.Text + "', '"
 					                 + fmEdit.pictureBox1.ImageLocation + "'";
 					SqlCommand com = new SqlCommand
 					{
@@ -178,13 +178,13 @@ namespace EmployeeCatalog
 						Connection = connect
 					};
 					MessageBox.Show(com.ExecuteNonQuery() + " record added");
-					GetDataFormDB();
 				}catch(Exception ex){
 					MessageBox.Show(ex.Message);
 				}finally{
 					connect.Close();
 				}
-			}
+                GetDataFormDB();
+            }
 		}
 		
 		/// <summary>
@@ -210,28 +210,28 @@ namespace EmployeeCatalog
 				try{
 					connect.Open();
 					//Процедура обновляет данные сотрудника во всех таблицах БД по его id
-					string comText = "EXECUTE updateEmployeeById '"
-					                 + (string)dc["id"].Value + "' '"
-					                 + fmEdit.textBoxSurname.Text + "' '"
-					                 + fmEdit.textBoxName.Text + "' '"
-					                 + fmEdit.textBoxPatronymic.Text + "' '"
-					                 + fmEdit.textBoxPosition.Text + "' '"
-					                 + fmEdit.textBoxAdmission.Text + "' '"
-					                 + fmEdit.textBoxDismissal.Text + "' '"
+					string comText = "EXECUTE updateEmployeeById "
+					                 + (int)dc["id"].Value + ", '"
+					                 + fmEdit.textBoxSurname.Text + "', '"
+					                 + fmEdit.textBoxName.Text + "', '"
+					                 + fmEdit.textBoxPatronymic.Text + "', '"
+					                 + fmEdit.textBoxPosition.Text + "', '"
+					                 + fmEdit.textBoxAdmission.Text + "', '"
+					                 + fmEdit.textBoxDismissal.Text + "', '"
 					                 + fmEdit.pictureBox1.ImageLocation + "'";
 					SqlCommand com = new SqlCommand
 					{
 						CommandText = comText,
 						Connection = connect
 					};
-					MessageBox.Show(com.ExecuteNonQuery() + " record saved");
-					GetDataFormDB();
+					MessageBox.Show(com.ExecuteNonQuery() + " record updated");
 				}catch(Exception ex){
 					MessageBox.Show(ex.Message);
 				}finally{
 					connect.Close();
 				}
-			}
+                GetDataFormDB();
+            }
 		}
     }
 }
